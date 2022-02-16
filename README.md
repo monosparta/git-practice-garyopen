@@ -32,10 +32,25 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 <img width="382" alt="1" src="https://user-images.githubusercontent.com/32414355/154189687-8bbbc3f9-10f9-42e8-967e-aad173837c60.png">
 
 ※origin是遠端儲存庫(Server)的預設名稱，master是git的初始預設分支(branch)
-# 本機上的Git(從add到commit)
-<img width="427" alt="未命名" src="https://user-images.githubusercontent.com/32414355/154188453-3f2c743b-bb9c-4c44-8aa2-6dbef4dde56c.png">
+# 本機上的Git
+本圖為檔案從add到commit的移動方向
 
-※add檔案的幾種語法
+<img width="397" alt="未命名" src="https://user-images.githubusercontent.com/32414355/154200365-918f8985-32ca-4c0f-ae37-d1e84bf9af0d.png">
+
+※add檔案的幾種方式
+
+	$ git add * # 所有更新的檔案都控管
+	$ git add *.pdf  # 所有更新的某檔案都控管
+	$ git add main.html  # 指定控管
+	
+※解除add控管
+
+	$ git rm --cached [不要控管的檔案] # 解除控管 
+	
+※改檔案名稱(或暴力法直接改解控舊的管控新的= =)
+
+	$ git mv 舊檔名.pdf 新檔名.pdf
+
 # 提交(commit)
 每當工程師完成一項「工作」，都會做一次commit為其做註解(message)並傳入儲存庫，至於「工作」的定義還是看團隊或個人習慣。
 
@@ -54,6 +69,26 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 	$ git log --oneline [條件] # 條件可以是--grep(找關鍵字)、--author(找作者)、--since(何時開始)
  <img width="355" alt="commit" src="https://user-images.githubusercontent.com/32414355/154188022-04ac6fd4-dd43-441e-8d12-d14874dc1207.png">
 
+# 退回的方法
+### 重製(reset)
+不管是add錯、commit錯、想要把檔案退回到某個commit，總之想要把做錯的東西清除退回，都可以使用reset重新來過，不過還是有些區別。
+#### add退回不可控(把檔案給reset)
+
+	$ git reset [要退的檔案] 
+#### commit退回(把Commit給reset)
+
+	$ git reset a4550a7 # 把commit退回指定處(指定commit碼)
+	$ git reset a4550a7^ # 把commit退回指定處的上一個commit
+	
+reset --soft (把commit退回至指定處，並把到後的其他commit先丟回暫存區)
+
+	$ git reset --soft HEAD~1 # 數字代表，把commit退回了幾個(1表示退回上一次)
+reset –-hard (把commit退回至指定處，並把到後的其他commit清除!)
+
+※reset的三種mixed、hard、soft
+	$ git reset --hard HEAD~1 
+reset --soft (把commit退回至指定處，並把到後的其他commit先丟回暫存區)
+### checkout
 # 分支 (branch)
 有時候一個專案，有不同的功能需要同時進行開發，又不想干擾到彼此，就可以使用分支，最後將其合併即可。
 ### 檢查分支
