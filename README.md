@@ -37,7 +37,9 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 
 ※add檔案的幾種語法
 # 提交(commit)
-每當工程師完成一項「工作」，都會做一次commit為其做註解(message)並傳入儲存庫，至於「工作」的定義還是看團隊或個人習慣。  
+每當工程師完成一項「工作」，都會做一次commit為其做註解(message)並傳入儲存庫，至於「工作」的定義還是看團隊或個人習慣。
+
+	$ git commit -m "commit訊息"
 ※ 萬一太早commit有些檔案忘記add的話，add完它們後 --amend，就會取代上一次的commit! 
 
 	$ git commit --amend # 要更改message後面加 -m "新message"
@@ -50,24 +52,50 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 ※查的更仔細(有哪些commit是我做的、這個功能有哪些commit)  
 
 	$ git log --oneline [條件] # 條件可以是--grep(找關鍵字)、--author(找作者)、--since(何時開始)
-  <img width="355" alt="commit" src="https://user-images.githubusercontent.com/32414355/154188022-04ac6fd4-dd43-441e-8d12-d14874dc1207.png">
+ <img width="355" alt="commit" src="https://user-images.githubusercontent.com/32414355/154188022-04ac6fd4-dd43-441e-8d12-d14874dc1207.png">
 
 # 分支 (branch)
 有時候一個專案，有不同的功能需要同時進行開發，又不想干擾到彼此，就可以使用分支，最後將其合併即可。
 ### 檢查分支
-### 創建分支
+
+	$ git branch # 檢查目前有哪些分支(*為當前所在的分支)  
+<img width="346" alt="branch2" src="https://user-images.githubusercontent.com/32414355/154191990-58419107-e901-42b9-9fc2-463d11cc5636.png">
+
+### 新增分支
+
+	$ git branch [分支名稱] # 新增一個該名稱分支 
+<img width="347" alt="branch" src="https://user-images.githubusercontent.com/32414355/154192173-352d0cd0-3576-41aa-8e7a-58b3d47e8aa3.png">
+
 ※刪除分支
 
 	$ git branch -d [分支名稱] 
 ### 分支合併
-### 取消合併
-# 推送(push)
+先切換到要併的分支上
+
+	$ git checkout [要併分支]
+之後merge要被併的分支
+
+	$ git merge [被併分支]
+<img width="367" alt="合併分支" src="https://user-images.githubusercontent.com/32414355/154193558-9c5342cb-665c-429a-a0d6-85803f66f815.png">
+
+
+※小成果圖
+
+<img width="586" alt="分支" src="https://user-images.githubusercontent.com/32414355/154198587-4937537c-aa72-4bcb-ad11-8a1967f262b8.png">
+
+	
+# 遠端的推送(push)與拉(pull)
+### 推送(push)
 將自己本機做完的commit傳送至遠端的儲存庫(EX:Github)。
 
 	$ git push origin master # 將commit推到origin的master分支
+	
+<img width="342" alt="push" src="https://user-images.githubusercontent.com/32414355/154191469-2d9440e3-36c6-4d30-9652-181a0467dac6.png">
 ※在第一次的git已經有設定過remote了，如果要再檢查  
 	
 	$ git remote -v
+
+<img width="305" alt="fetch" src="https://user-images.githubusercontent.com/32414355/154199185-fb20d682-512c-4587-9301-8b9b8c1b8fd5.png">
 
 ※好懶我不要一直輸入那麼長push指令
 
@@ -82,9 +110,9 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 2.強制推送，覆蓋途中的commit(別亂用，會被找去喝茶)
 
 	$ git push --force
+	
 
-
-# 拉(pull)
+### 拉(pull)
 將遠端儲存庫的commit抓來與本機數據庫合併
 
 	$ git pull
@@ -118,7 +146,7 @@ clone是將遠端儲存庫建立在本機，pull是更新本機的儲存庫。
 	$ git status # 檢視目前狀態
   
 ### 控管  
-  $ git add * # 控管檔案
+  	$ git add * # 控管檔案
 	$ git rm --cached [不要控管的檔案] # 解除控管   
 ### 推送(push)    
 ### 拉(pull)  
