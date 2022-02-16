@@ -8,7 +8,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 |:-:|:-:|:-:|
 |儲存庫|由一個伺服器管理儲存庫|每個工程師都有自己的儲存庫|
 |作業效率|一次只能一位工程師進行作業(上鎖)|工程師們都能個人作業|
-|檔案統一性|百分之百同步| 各個儲存庫的進度不同|
+|檔案統一性|高同步率| 各個儲存庫的進度不同|
 |代表|Git、Mercurial| CVS、SVN|
 
 # 我的第一次Git
@@ -33,7 +33,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 
 ※origin是遠端儲存庫(Server)的預設名稱，master是git的初始預設分支(branch)
 # 本機上的Git
-本圖為檔案從add到commit的移動方向
+本圖為檔案從監控(add)到提交(commit)的移動方向
 
 <img width="397" alt="未命名" src="https://user-images.githubusercontent.com/32414355/154200365-918f8985-32ca-4c0f-ae37-d1e84bf9af0d.png">
 
@@ -52,7 +52,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 	$ git mv 舊檔名.pdf 新檔名.pdf
 
 # 提交(commit)
-每當工程師完成一項「工作」，都會做一次commit為其做註解(message)並傳入儲存庫，至於「工作」的定義還是看團隊或個人習慣。
+每當工程師完成一項「工作」，都會做一次commit為其做註解(message)並傳入儲存庫，至於一次「工作」的定義還是看團隊與個人習慣。
 
 	$ git commit -m "commit訊息"
 ※ 萬一太早commit有些檔案忘記add的話，add完它們後 --amend，就會取代上一次的commit! 
@@ -68,6 +68,8 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 
 	$ git log --oneline [條件] # 條件可以是--grep(找關鍵字)、--author(找作者)、--since(何時開始)
  <img width="355" alt="commit" src="https://user-images.githubusercontent.com/32414355/154188022-04ac6fd4-dd43-441e-8d12-d14874dc1207.png">
+ 
+ ### 標籤()
 
 # 復原的方法
 ### 重製(reset)
@@ -91,7 +93,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 	$ git checkout a4550a7 # 把commit退回指定處(指定commit碼)
 	$ git checkout a4550a7^ # 把commit退回指定處的上一個commit
 	$ git checkout HEAD~1 # 數字代表，把commit退回了幾個(1表示退回上一次) 
-※想要回到分支的最進度，輸分支名稱就可以了
+※想要回到分支的最進度，輸入分支名稱就可以了
 
 	$ git checkout [當前分支]
 
@@ -208,7 +210,28 @@ clone是將遠端儲存庫建立在本機，pull是更新本機的儲存庫。
 	$ git branch [分支名稱] # 新增一個該名稱分支   
 	$ git branch -m [原分支名稱] [更改後分支名稱] # 幫分支換名稱  
 	$ git branch -d [分支名稱] # 刪除某個分支
-# GitFlow 介紹
+# Git Flow
+Git Flow規範主要是透過5大分支來分類commit，降低專案發生commit混亂的問題。
+### 長期分支
+會一直存在於專案分支上
+* master
+	- Git預設的初始分支，在Git Flow是用來放可上線版本的commit
+	- 不會在這個分支上直接commit，都是透過其他分支合併而來
+	- 通常都會有版本標籤
+* develop
+	- feature們合併的主要分支，不過所有短期分支都有跟它進行合併的機會
+	- 有著最新版本的完整feature
+### 短期分支
+當「工作」完成就會被合併並刪除
+* hotfix
+	- 從master延伸出來的分支，上線版本突然出現問題時，會開此分支進行熱修
+	- 熱修完畢後，會同時跟master和develop合併後刪除
+* release
+	- 從develop延伸出來準備上線前的測試分支，做上線前的最後修正與準備
+	- 測試完畢後，會同時跟master和develop合併後刪除(測試時可能會修正develop時沒注意到問題)
+* feature
+	- 從develop延伸出來的分支，可能同時存在好多個不同feature的分支
+	- 該feature開發完畢就會和develop合併後刪除
 #  我的小小狀況
 ### 1. Please tell me who you are?  
 <img width="432" alt="who_you_are" src="https://user-images.githubusercontent.com/32414355/154187923-6f2a43e2-8a6c-4f8f-bf4c-f70cb1b06c5f.png">
