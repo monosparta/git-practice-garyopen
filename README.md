@@ -154,7 +154,8 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護更新，後來Lin
 
 	$ git rebase [要併分支] # 在被併分支上輸入
 
-<img width="270" alt="Untitled Diagram drawio" src="https://user-images.githubusercontent.com/32414355/154388191-9a9b7398-6cfb-4a83-8706-00b91230c23b.png">
+![Untitled Diagram drawio (1)](https://user-images.githubusercontent.com/32414355/154393786-6d7b3ff8-2c9f-4310-b6da-103b8372c6bd.png)
+
 
 # 遠端的推送(push)與拉(pull)
 ### 推送(push)
