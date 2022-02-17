@@ -1,13 +1,13 @@
 # Git-基本介紹
-Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決定使用BitKeeper來做版本控制(有引發部分自由軟體社群的不滿)，但在2005年時一個逆向工程的紛爭，使Bitkeeper的公司收回了給Linux的免費授權，所以Linux的創始者-Linus Benedict決定自己打造一個版本控制系統-Git。
+Linux kernel在2002年前是使用補丁(patch)來進行維護更新，後來Linux決定使用BitKeeper來做版本控制(有引發部分自由軟體社群的不滿)，但在2005年時一個逆向工程的紛爭，讓BitMover收回了Linux使用BitKeeper的免費授權，所以Linux的創始者-Linus Benedict決定自己打造一個版本控制系統-Git。
 # 為什麼要做版本控制、版本控制有哪些？
-一個大型專案如果不做好版本控制，目前上線版本跟開發版本的差別、程式越改越多BUG我想重新再來、這功能是甚麼時候加的啊，就像圖書館的書沒有做好分類一樣，下場會發常可怕，所以為了方便工程師管理專案，版本控制是一定要做好的。
+一個大型專案如果不做好版本控制可能會發生哪個是上線版本哪個是開發版本、程式越改越多BUG我想重來的版本是哪個、這功能是甚麼時候加的啊，就像圖書館的書沒有做好分類一樣，下場會非常可怕，所以為了方便工程師管理專案，版本控制是一定要做好的。
 
 版本控制主要分為集中式(centralized)與分散式(distributed):
 ||集中式|分散式|
 |:-:|:-:|:-:|
-|儲存庫|由一個伺服器管理儲存庫|每個工程師都有自己的儲存庫|
-|作業效率|一次只能一位工程師進行作業(上鎖)|工程師們都能個人作業|
+|儲存庫|由一個伺服器管理儲存庫|每個參與者都有自己的儲存庫|
+|作業效率|一次只能一人進行作業(上鎖)|參與者們都能個人作業|
 |檔案統一性|高同步率| 各個儲存庫的進度不同|
 |代表|Git、Mercurial| CVS、SVN|
 
@@ -33,12 +33,12 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 
 ※origin是遠端儲存庫(Server)的預設名稱，master是git的初始預設分支(branch)
 # 本機上的Git
-本圖為檔案從監控(add)到提交(commit)的移動方向
+下圖為新增或更動的檔案從控管(add)到提交(commit)的移動方向
 
 <img width="397" alt="未命名" src="https://user-images.githubusercontent.com/32414355/154200365-918f8985-32ca-4c0f-ae37-d1e84bf9af0d.png">
 
 ### 檢視Git目前狀態
-檢查目前在哪個分支，此分支上的哪些檔案有被監控那些還沒
+檢查目前在哪個分支，此分支上的新增或更動檔案有沒有被控管
 
 	$ git status
 	
@@ -54,7 +54,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 
 	$ git rm --cached [不要控管的檔案] # 解除控管 
 	
-※改檔案名稱(或暴力法直接改解控舊的管控新的= =)
+※改檔案名稱(或暴力法直接改，然後解控舊的，控管新的= =)
 
 	$ git mv 舊檔名.pdf 新檔名.pdf
 
@@ -62,7 +62,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 每當工程師完成一項「工作」，都會做一次commit為其做註解(message)並傳入儲存庫，至於一次「工作」的定義還是看團隊與個人習慣。
 
 	$ git commit -m "commit訊息"
-※ 萬一太早commit有些檔案忘記add的話，add完它們後 --amend，就會取代上一次的commit! 
+※ 萬一太早commit有些檔案忘記add的話，add完它們後 --amend，就會取代上一次的commit!(也可以直接使用來更改上一次的commend訊息)
 
 	$ git commit --amend # 要更改message後面加 -m "新message"
    
@@ -116,7 +116,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 	$ git checkout a4550a7 # 把commit退回指定處(指定commit碼)
 	$ git checkout a4550a7^ # 把commit退回指定處的上一個commit
 	$ git checkout HEAD~1 # 數字代表，把commit退回了幾個(1表示退回上一次) 
-※想要回到分支的最進度，輸入分支名稱就可以了
+※想要回到分支的最新進度，輸入分支名稱就可以了
 
 	$ git checkout [當前分支]
 
@@ -147,14 +147,14 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 
 ※小成果圖
 
-<img width="586" alt="分支" src="https://user-images.githubusercontent.com/32414355/154198587-4937537c-aa72-4bcb-ad11-8a1967f262b8.png">
+<img width="564" alt="分支" src="https://user-images.githubusercontent.com/32414355/154389082-edb812b3-fd2a-4f2e-a5cb-369dc3e75f29.png">
 
 ### Rebase合併
 把分支上的commit都複製起來，帶到要併的分支(被帶過來commit的commit碼會變)把它接上去
 
 	$ git rebase [要併分支] # 在被併分支上輸入
 
-![未命名](https://user-images.githubusercontent.com/32414355/154293302-3cffefa2-b343-4f44-aa82-17ac0f32dc69.png)
+<img width="270" alt="Untitled Diagram drawio" src="https://user-images.githubusercontent.com/32414355/154388191-9a9b7398-6cfb-4a83-8706-00b91230c23b.png">
 
 # 遠端的推送(push)與拉(pull)
 ### 推送(push)
@@ -180,6 +180,7 @@ Linux kernel在2002年前是使用補丁(patch)來進行維護，後來Linux決�
 	$ git push # 再推!
 
 2.強制推送，覆蓋途中的commit(別亂用，會被找去泡茶)
+
 
 	$ git push --force
 	
@@ -214,7 +215,7 @@ clone是將遠端儲存庫建立在本機，pull是更新本機的儲存庫。
 ### 檢視 
 
  	$ git log # 檢視commit紀錄  
-	$ git remote - # 檢視遠端設定   
+	$ git remote -v # 檢視遠端設定   
 	$ git status # 檢視目前狀態
 ### checkout
 
@@ -278,14 +279,12 @@ Git Flow規範主要是透過5大分支來分類commit，降低專案發生commi
 
 A:第一次使用git時，需要設定使用者  
 
-	git config --global user.name "你的名字"  
-	git config --global user.email "你的電子郵件"
+	git config --global user.name "名字"  
+	git config --global user.email "電子郵件"
 ※如果突然有個Repository要不同的使用者?
 
-	git config --local user.name "你的名字"
-	git config --local user.email "你的電子郵件"
+	git config --local user.name "名字"
+	git config --local user.email "電子郵件"
 
 ### 2. push時github登入一直失敗"Logon failed, use ctrl+c to cancel basic credential prompt."
 A:更新git至最新版(或帳密真的輸錯= =)
-
-
